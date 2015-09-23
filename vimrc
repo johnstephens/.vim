@@ -11,7 +11,7 @@ filetype plugin indent on       " load file type plugins + indentation
 
 "" Source the vimrc file after saving it
 if has("autocmd")
-  autocmd bufwritepost .vimrc source $MYVIMRC
+  autocmd bufwritepost vimrc source $MYVIMRC
 endif
 
 "" Quickopen vimrc
