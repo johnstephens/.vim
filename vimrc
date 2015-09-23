@@ -154,11 +154,11 @@ nmap ]w <C-w>w
 nmap [w <C-w>W
 
 "" Close open XML tags using Space-.
-autocmd BufNewFile,BufRead *.html imap <leader>/ </<C-X><C-O>
-autocmd BufNewFile,BufRead *.htm imap <leader>/ </<C-X><C-O>
-autocmd BufNewFile,BufRead *.xml imap <leader>/ </<C-X><C-O>
-autocmd BufNewFile,BufRead *.txp imap <leader>/ </<C-X><C-O>
-autocmd BufNewFile,BufRead *.php imap <leader>/ </<C-X><C-O>
+" autocmd BufNewFile,BufRead *.html imap <leader>/ </<C-X><C-O>
+" autocmd BufNewFile,BufRead *.htm imap <leader>/ </<C-X><C-O>
+" autocmd BufNewFile,BufRead *.xml imap <leader>/ </<C-X><C-O>
+" autocmd BufNewFile,BufRead *.txp imap <leader>/ </<C-X><C-O>
+" autocmd BufNewFile,BufRead *.php imap <leader>/ </<C-X><C-O>
 
 
 
@@ -169,6 +169,17 @@ autocmd BufNewFile,BufRead *.php imap <leader>/ </<C-X><C-O>
 ""  ------------------------
 
 execute pathogen#infect()
+
+
+
+
+
+
+""  ------------------------
+""  #CLOSETAG
+""  ------------------------
+
+let g:closetag_filenames = "*.html,*.xhtml,*.txp,*.php"
 
 
 
