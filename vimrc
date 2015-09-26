@@ -186,6 +186,25 @@ let g:closetag_filenames = "*.html,*.xhtml,*.txp,*.php"
 
 
 ""  ------------------------
+""  #WRITING-TOOLS
+""  ------------------------
+
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+  autocmd FileType omm          call pencil#init()
+  autocmd FileType wiki         call pencil#init()
+augroup END
+
+
+
+
+
+""  ------------------------
 ""  #AIRLINE
 ""  ------------------------
 
