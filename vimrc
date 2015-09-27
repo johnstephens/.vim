@@ -5,17 +5,6 @@
 set nocompatible                " choose no compatibility with legacy vi
 syntax enable
 set encoding=utf-8
-set showcmd                     " display incomplete commands
-set history=200
-filetype plugin indent on       " load file type plugins + indentation
-
-"" Source the vimrc file after saving it
-if has("autocmd")
-  autocmd bufwritepost vimrc source $MYVIMRC
-endif
-
-"" Quickopen vimrc
-nmap <leader>v :tabedit $MYVIMRC<CR>
 
 
 
@@ -28,7 +17,6 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 set nowrap                      " don't wrap lines
 set tabstop=2 shiftwidth=2      " a tab is two spaces (or set this to 4)
 set expandtab                   " use spaces, not tabs (optional)
-set backspace=indent,eol,start  " backspace through everything in insert mode
 set scrolloff=8                 " always show 8 lines above and below cursor, when possible
 
 
@@ -73,7 +61,6 @@ set listchars+=trail:·          " Show trailing spaces as dots
 ""  ------------------------
 
 set hlsearch                    " highlight matches
-set incsearch                   " incremental searching
 set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
 
@@ -159,6 +146,14 @@ nmap [w <C-w>W
 " autocmd BufNewFile,BufRead *.xml imap <leader>/ </<C-X><C-O>
 " autocmd BufNewFile,BufRead *.txp imap <leader>/ </<C-X><C-O>
 " autocmd BufNewFile,BufRead *.php imap <leader>/ </<C-X><C-O>
+
+"" Source the vimrc file after saving it
+if has("autocmd")
+  autocmd bufwritepost vimrc source $MYVIMRC
+endif
+
+"" Quickopen vimrc
+nmap <leader>v :tabedit $MYVIMRC<CR>
 
 
 
