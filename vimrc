@@ -1,17 +1,19 @@
 ""  ------------------------
-""  #BASE
+""  #BASE  {{{
 ""  ------------------------
 
-set nocompatible                " choose no compatibility with legacy vi
 syntax enable
-set encoding=utf-8
+set omnifunc=syntaxcomplete#Complete
+set nocompatible                " choose no compatibility with legacy vi
+set wildignorecase
 
 
 
 
 
+""  }}}
 ""  ------------------------
-""  #WHITESPACE
+""  #WHITESPACE  {{{
 ""  ------------------------
 
 set nowrap                      " don't wrap lines
@@ -23,13 +25,17 @@ set scrolloff=8                 " always show 8 lines above and below cursor, wh
 
 
 
+""  }}}
 ""  ------------------------
-""  #APPEARANCE
+""  #APPEARANCE  {{{
 ""  ------------------------
 
 set t_Co=256
-colorscheme molokai
-set guifont=Monaco:h14          " Set display font
+" colorscheme molokai
+" colorscheme alduin
+colorscheme gruvbox
+set background=dark
+set guifont=mononoki:h16        " Set display font
 
 " set columns=84
 " set foldcolumn=6
@@ -48,28 +54,41 @@ set showbreak=…
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%81v.\+/
 set list
-set nu                          " Add line numbers
+set number                      " Add line numbers
+set cursorline
 set listchars=tab:▸\ ,eol:¬     " Display tabs and line endings like a Mac
 set listchars+=trail:·          " Show trailing spaces as dots
+set lazyredraw                  " Redraw only when we need to
+set showmatch                   " Highlight matching [({})]
+autocmd VimResized * wincmd =   " Automatically resize splits when window is resized
+
+set foldenable
+set foldlevelstart=10
+set foldnestmax=10
+set foldmethod=indent
 
 
 
 
 
+""  }}}
 ""  ------------------------
-""  #SEARCHING
+""  #SEARCHING  {{{
 ""  ------------------------
 
 set hlsearch                    " highlight matches
 set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
+" Turn off search hightlights
+nnoremap <leader><space> :nohlsearch<CR>
 
 
 
 
 
+""  }}}
 ""  ------------------------
-""  #BUFFERS
+""  #BUFFERS  {{{
 ""  ------------------------
 
 set hidden
@@ -78,8 +97,9 @@ set hidden
 
 
 
+""  }}}
 ""  ------------------------
-""  #FILETYPES
+""  #FILETYPES  {{{
 ""  ------------------------
 
 au BufNewFile,BufRead *.txp set filetype=html
@@ -88,8 +108,9 @@ au BufNewFile,BufRead *.txp set filetype=html
 
 
 
+""  }}}
 ""  ------------------------
-""  #MAPPINGS
+""  #MAPPINGS  {{{
 ""  ------------------------
 
 "" Use Vim motions: Disable mouse and arrow keys
@@ -159,19 +180,106 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 
 
 
+""  }}}
 ""  ------------------------
-""  #PLUGINS
+""  #PLUGINS  {{{
 ""  ------------------------
 
-execute pathogen#infect()
+"" Manage plugins
+ "
+packadd minpac
+call minpac#init()
+call minpac#add('k-takata/minpac', {'type':'opt'})
+
+command! PackUpdate call minpac#update()
+command! PackClean call minpac#clean()
+
+"" Configure Vim
+ "
+call minpac#add('tpope/vim-sensible')
+call minpac#add('editorconfig/editorconfig-vim')
+call minpac#add('jeffkreeftmeijer/vim-numbertoggle')
+
+"" Appearance
+ "
+call minpac#add('trevordmiller/nova-vim')
+call minpac#add('itchyny/lightline.vim')
+
+"" Search for text
+ "
+call minpac#add('rking/ag.vim')
+call minpac#add('kien/ctrlp.vim')
+call minpac#add('nazo/pt.vim')
+
+"" Organize
+ "
+call minpac#add('vimwiki/vimwiki')
+" tbabej/taskwiki
+
+"" Distraction-free writing
+ "
+call minpac#add('junegunn/goyo.vim')
+call minpac#add('junegunn/limelight.vim')
+call minpac#add('plasticboy/vim-markdown')
+call minpac#add('timcharper/textile.vim')
+
+"" Edit *
+ "
+call minpac#add('mattn/emmet-vim')
+call minpac#add('tpope/vim-commentary')
+call minpac#add('scrooloose/syntastic')
+call minpac#add('Townk/vim-autoclose')
+call minpac#add('tpope/vim-eunuch')
+call minpac#add('reedes/vim-wordy')
+call minpac#add('justinmk/vim-sneak')
+call minpac#add('tpope/vim-surround')
+call minpac#add('ervandew/supertab')
+call minpac#add('godlygeek/tabular')
+call minpac#add('isa/vim-matchit')
+call minpac#add('tpope/vim-unimpaired')
+" SirVer/ultisnips
+
+"" Edit CSS
+ "
+call minpac#add('ap/vim-css-color')
+call minpac#add('mybuddymichael/vim-hexhighlight')
+
+"" Edit HTML
+ "
+call minpac#add('alvan/vim-closetag')
+call minpac#add('actionshrimp/vim-xpath')
+
+"" Edit JavaScript
+ "
+call minpac#add('pangloss/vim-javascript')
+call minpac#add('mxw/vim-jsx')
+call minpac#add('leafgarland/typescript-vim')
+
+"" Version control
+ "
+" airblade/vim-gitgutter
+call minpac#add('phleet/vim-mercenary')
 
 
 
 
 
-
+""  }}}
 ""  ------------------------
-""  #CLOSETAG
+""  #NOVACOLORS  {{{
+""  ------------------------
+
+" https://trevordmiller.com/projects/nova
+colorscheme nova
+" TODO nest this in conditional check for termguicolors
+
+
+
+
+
+""  }}}
+""  ------------------------
+""  #CLOSETAG  {{{
 ""  ------------------------
 
 let g:closetag_filenames = "*.html,*.xhtml,*.txp,*.php"
@@ -180,53 +288,29 @@ let g:closetag_filenames = "*.html,*.xhtml,*.txp,*.php"
 
 
 
+""  }}}
 ""  ------------------------
-""  #WRITING-TOOLS
+""  #WRITING-TOOLS  {{{
 ""  ------------------------
 
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-augroup pencil
-  autocmd!
-  autocmd FileType markdown,mkd call pencil#init()
-  autocmd FileType text         call pencil#init()
-  autocmd FileType omm          call pencil#init()
-  autocmd FileType wiki         call pencil#init()
-augroup END
+" augroup pencil
+"   autocmd!
+"   autocmd FileType markdown,mkd call pencil#init()
+"   autocmd FileType text         call pencil#init()
+"   autocmd FileType omm          call pencil#init()
+"   autocmd FileType wiki         call pencil#init()
+" augroup END
 
 
 
 
 
+""  }}}
 ""  ------------------------
-""  #AIRLINE
-""  ------------------------
-
-" if !exists('g:airline_symbols')
-"   let g:airline_symbols = {}
-" endif
-
-" " unicode symbols
-" let g:airline_left_sep = '»'
-" let g:airline_left_sep = '▶'
-" let g:airline_right_sep = '«'
-" let g:airline_right_sep = '◀'
-" let g:airline_symbols.linenr = '␊'
-" let g:airline_symbols.linenr = '␤'
-" let g:airline_symbols.linenr = '¶'
-" let g:airline_symbols.branch = '⎇'
-" let g:airline_symbols.paste = 'ρ'
-" let g:airline_symbols.paste = 'Þ'
-" let g:airline_symbols.paste = '∥'
-" let g:airline_symbols.whitespace = 'Ξ'
-
-
-
-
-
-""  ------------------------
-""  #SYNTASTIC
+""  #SYNTASTIC  {{{
 ""  ------------------------
 
 set statusline+=%#warningmsg#
@@ -245,11 +329,12 @@ let g:syntastic_sass_checkers=[ 'sass', 'sassc' ]
 
 
 
+""  }}}
 ""  ------------------------
-""  #ULTISNIPS
+""  #ULTISNIPS  {{{
 ""  ------------------------
 
-" let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<tab>"
 " let g:UltiSnipsJumpForwardTrigger="<c-b>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
@@ -257,9 +342,5 @@ let g:syntastic_sass_checkers=[ 'sass', 'sassc' ]
 
 
 
-""  ------------------------
-""  #VMATH
-""  ------------------------
-
-" vmap <expr>  ++  VMATH_YankAndAnalyse()
-" nmap         ++  vip++
+"" }}}
+" vim:foldmethod=marker:foldlevel=0
