@@ -20,6 +20,7 @@ set nowrap                      " don't wrap lines
 set tabstop=2 shiftwidth=2      " a tab is two spaces (or set this to 4)
 set expandtab                   " use spaces, not tabs (optional)
 set scrolloff=8                 " always show 8 lines above and below cursor, when possible
+set breakindent                 " when a line is wrapped, indent the trailing pseudo-lines
 
 
 
@@ -35,7 +36,9 @@ set t_Co=256
 " colorscheme alduin
 colorscheme gruvbox
 set background=dark
-set guifont=mononoki:h16        " Set display font
+if has("gui_running") " Don't set display font in NeoVim
+  set guifont=mononoki:h16        " Set display font
+endif
 
 " set columns=84
 " set foldcolumn=6
@@ -73,14 +76,35 @@ set foldmethod=indent
 
 ""  }}}
 ""  ------------------------
+""  #HISTORY  {{{
+""  ------------------------
+
+"" Maintain undo history between sessions
+ "
+set undofile
+set undodir=~/.vim/undodir
+
+"" Have swapfiles ever come in handy?
+ "
+set noswapfile
+
+
+
+
+
+""  }}}
+""  ------------------------
 ""  #SEARCHING  {{{
 ""  ------------------------
 
+set path+=**                    " searc down into subfolders
+set wildmenu                    " display all matching files with tab completion
 set hlsearch                    " highlight matches
 set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
 " Turn off search hightlights
 nnoremap <leader><space> :nohlsearch<CR>
+set inccommand=nosplit          " Show interactive replacement text
 
 
 
@@ -144,19 +168,6 @@ nnoremap : ;
 "" Use Spacebar as <leader>
 let mapleader = "\<Space>"
 
-"" Type Space-o to open a new file
-nnoremap <Leader>o :CtrlP<CR>
-"" Type Space-w to save fast
-nnoremap <Leader>w :w<CR>
-
-"" Access system clipboard using Space-y and Space-p
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
-
 "" Switch windows, using Unimpaired-type mappings
 nmap ]w <C-w>w
 nmap [w <C-w>W
@@ -168,13 +179,23 @@ nmap [w <C-w>W
 " autocmd BufNewFile,BufRead *.txp imap <leader>/ </<C-X><C-O>
 " autocmd BufNewFile,BufRead *.php imap <leader>/ </<C-X><C-O>
 
-"" Source the vimrc file after saving it
-if has("autocmd")
-  autocmd bufwritepost vimrc source $MYVIMRC
-endif
 
-"" Quickopen vimrc
-nmap <leader>v :tabedit $MYVIMRC<CR>
+
+
+
+""  }}}
+""  ------------------------
+""  #ABBREVIATIONS  {{{
+""  ------------------------
+
+"" Useful logging commands
+iabbrev <expr> ddate strftime('%F')
+iabbrev <expr> qdate strftime('%e %mmo. %Y')
+iabbrev <expr> ldate strftime('%e %mmo. ~ Week %W: Day %w')
+iabbrev <expr> ttime strftime('%R')
+
+
+
 
 
 
@@ -187,6 +208,7 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 
 "" Manage plugins
  "
+
 packadd minpac
 call minpac#init()
 call minpac#add('k-takata/minpac', {'type':'opt'})
@@ -199,22 +221,32 @@ command! PackClean call minpac#clean()
 call minpac#add('tpope/vim-sensible')
 call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('jeffkreeftmeijer/vim-numbertoggle')
+call minpac#add('machakann/vim-highlightedyank')
+" call minpac#add('gioele/vim-autoswap')
+call minpac#add('chrisbra/Recover.vim')
 
 "" Appearance
  "
 call minpac#add('trevordmiller/nova-vim')
 call minpac#add('itchyny/lightline.vim')
+call minpac#add('mhinz/vim-startify')
+call minpac#add('ayu-theme/ayu-vim')
 
-"" Search for text
+"" Search and navigate
  "
 call minpac#add('rking/ag.vim')
 call minpac#add('kien/ctrlp.vim')
 call minpac#add('nazo/pt.vim')
+call minpac#add('jremmen/vim-ripgrep')
+call minpac#add('tpope/vim-vinegar')
 
 "" Organize
  "
-call minpac#add('vimwiki/vimwiki')
-" tbabej/taskwiki
+call minpac#add('vimwiki/vimwiki', { 'branch': 'dev' })
+call minpac#add('tbabej/taskwiki')
+"" Recommended for Taskwiki
+call minpac#add('powerman/vim-plugin-AnsiEsc')
+call minpac#add('majutsushi/tagbar')
 
 "" Distraction-free writing
  "
@@ -227,8 +259,9 @@ call minpac#add('timcharper/textile.vim')
  "
 call minpac#add('mattn/emmet-vim')
 call minpac#add('tpope/vim-commentary')
-call minpac#add('scrooloose/syntastic')
-call minpac#add('Townk/vim-autoclose')
+" call minpac#add('scrooloose/syntastic')
+" call minpac#add('Townk/vim-autoclose') "" This plugin causes insert-mode
+" abbreviations to fail to expand after typing space character
 call minpac#add('tpope/vim-eunuch')
 call minpac#add('reedes/vim-wordy')
 call minpac#add('justinmk/vim-sneak')
@@ -237,7 +270,7 @@ call minpac#add('ervandew/supertab')
 call minpac#add('godlygeek/tabular')
 call minpac#add('isa/vim-matchit')
 call minpac#add('tpope/vim-unimpaired')
-" SirVer/ultisnips
+" call minpac#add('SirVer/ultisnips')
 
 "" Edit CSS
  "
@@ -253,7 +286,13 @@ call minpac#add('actionshrimp/vim-xpath')
  "
 call minpac#add('pangloss/vim-javascript')
 call minpac#add('mxw/vim-jsx')
+call minpac#add('flowtype/vim-flow')
 call minpac#add('leafgarland/typescript-vim')
+call minpac#add('w0rp/ale')
+
+"" Edit Elm
+ "
+call minpac#add('ElmCast/elm-vim')
 
 "" Version control
  "
@@ -313,17 +352,17 @@ autocmd! User GoyoLeave Limelight!
 ""  #SYNTASTIC  {{{
 ""  ------------------------
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_html_checkers=['']
-let g:syntastic_js_checkers=[ 'jshint' ]
-let g:syntastic_sass_checkers=[ 'sass', 'sassc' ]
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_html_checkers=['']
+" let g:syntastic_js_checkers=[ 'jshint' ]
+" let g:syntastic_sass_checkers=[ 'sass', 'sassc' ]
 
 
 
@@ -335,8 +374,56 @@ let g:syntastic_sass_checkers=[ 'sass', 'sassc' ]
 ""  ------------------------
 
 let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/snippets']
 " let g:UltiSnipsJumpForwardTrigger="<c-b>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+
+
+
+
+""  }}}
+""  ------------------------
+""  #STARTIFY  {{{
+""  ------------------------
+
+let g:ascii = [
+      \ '    ',
+      \ '     _    ___',
+      \ '    | |  / (_)___ ___       REMOVE DISTRACTIONS',
+      \ '    | | / / / __ `__ \    CHOOSE ONE SMALL STEP',
+      \ '    | |/ / / / / / / /              DO  IT  NOW',
+      \ '    |___/_/_/ /_/ /_/             KEEP STARTING',
+      \ '    ',
+      \ '    ',
+      \ ]
+
+let g:startify_custom_header = g:ascii
+
+
+
+
+
+""  }}}
+""  ------------------------
+""  #VIMWIKI  {{{
+""  ------------------------
+
+let g:vimwiki_list = [{'diary_rel_path': '', 'diary_index': 'log', 'diary_header': 'Log'}]
+
+
+
+
+""  }}}
+""  ------------------------
+""  #ALE CONFIG  {{{
+""  ------------------------
+
+" let g:ale_fixers = {}
+" let g:ale_fixers = {
+"       \ 'javascript': ['prettier', 'babel-eslint'],
+"       \ 'php': ['ale-php-hack']
+"       \ }
 
 
 
