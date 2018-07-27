@@ -194,8 +194,13 @@ iabbrev <expr> qdate strftime('%e %mmo. %Y')
 iabbrev <expr> ldate strftime('%e %mmo. ~ Week %W: Day %w')
 iabbrev <expr> ttime strftime('%R')
 
+"" Design problem/solution log template
+"" https://routley.io/tech/2017/11/23/logbook.html
+iabbrev llog Consider the problem you’re attempting to solve::<Esc>oDescribe your method for solving it::<Esc>oDescribe the process of carrying out the method::<Esc>oRecord what happened, and ask how it could be improved::<Esc>3kA
 
-
+"" Decision log entry template
+"" https://fs.blog/2014/02/decision-journal/
+iabbrev ddlog Situation/Context::<Esc>oProblem::<Esc>oVariables that govern the situation include::<Esc>oComplications/complexities as I see them::<Esc>oSerious alternatives that were not chosen::<Esc>oExplain the range of outcomes::<Esc>oExpected outcome, reasons, and probabilies for each outcome::<Esc>oTime of day, physical and mental feelings::<Esc>7kA
 
 
 
@@ -248,20 +253,23 @@ call minpac#add('tbabej/taskwiki')
 call minpac#add('powerman/vim-plugin-AnsiEsc')
 call minpac#add('majutsushi/tagbar')
 
+"" Syntax
+ "
+call minpac#add('sheerun/vim-polyglot')
+
 "" Distraction-free writing
  "
 call minpac#add('junegunn/goyo.vim')
 call minpac#add('junegunn/limelight.vim')
-call minpac#add('plasticboy/vim-markdown')
-call minpac#add('timcharper/textile.vim')
+" call minpac#add('plasticboy/vim-markdown') " Included by vim-polyglot
+" call minpac#add('timcharper/textile.vim') " Included by vim-polyglot
 
 "" Edit *
  "
 call minpac#add('mattn/emmet-vim')
 call minpac#add('tpope/vim-commentary')
 " call minpac#add('scrooloose/syntastic')
-" call minpac#add('Townk/vim-autoclose') "" This plugin causes insert-mode
-" abbreviations to fail to expand after typing space character
+call minpac#add('jiangmiao/auto-pairs')
 call minpac#add('tpope/vim-eunuch')
 call minpac#add('reedes/vim-wordy')
 call minpac#add('justinmk/vim-sneak')
@@ -285,14 +293,14 @@ call minpac#add('actionshrimp/vim-xpath')
 "" Edit JavaScript
  "
 call minpac#add('pangloss/vim-javascript')
-call minpac#add('mxw/vim-jsx')
+" call minpac#add('mxw/vim-jsx') " Included by vim-polyglot
 call minpac#add('flowtype/vim-flow')
-call minpac#add('leafgarland/typescript-vim')
+" call minpac#add('leafgarland/typescript-vim') " Included by vim-polyglot
 call minpac#add('w0rp/ale')
 
 "" Edit Elm
  "
-call minpac#add('ElmCast/elm-vim')
+" call minpac#add('ElmCast/elm-vim') " Included by vim-polyglot
 
 "" Version control
  "
