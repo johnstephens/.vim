@@ -200,7 +200,7 @@ iabbrev llog Consider the problem you’re attempting to solve::<CR>Describe you
 
 "" Decision log entry template
 "" https://fs.blog/2014/02/decision-journal/
-iabbrev ddlog Situation/Context::<CR>Problem::<CR>Variables that govern the situation include::<CR>Complications/complexities as I see them::<CR>Serious alternatives that were not chosen::<CR>Explain the range of outcomes::<CR>Expected outcome, reasons, and probabilies for each outcome::<CR>Time of day, physical and mental feelings::<Esc>7kA
+iabbrev ddlog Situation/Context::<CR>Problem::<CR>Variables that govern the situation include::<CR>Complications/complexities as I see them::<CR>Serious alternatives that were not chosen::<CR>Explain the range of outcomes::<CR>Expected outcome, reasons, and probabilies for each outcome::<CR>Time of day, physical and mental feelings::<CR>Review date (6 months)::<Esc>8kA
 
 
 
