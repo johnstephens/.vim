@@ -196,11 +196,11 @@ iabbrev <expr> ttime strftime('%R')
 
 "" Design problem/solution log template
 "" https://routley.io/tech/2017/11/23/logbook.html
-iabbrev llog Consider the problem you’re attempting to solve::<Esc>oDescribe your method for solving it::<Esc>oDescribe the process of carrying out the method::<Esc>oRecord what happened, and ask how it could be improved::<Esc>3kA
+iabbrev llog Consider the problem you’re attempting to solve::<CR>Describe your method for solving it::<CR>Describe the process of carrying out the method::<CR>Record what happened, and ask how it could be improved::<Esc>3kA
 
 "" Decision log entry template
 "" https://fs.blog/2014/02/decision-journal/
-iabbrev ddlog Situation/Context::<Esc>oProblem::<Esc>oVariables that govern the situation include::<Esc>oComplications/complexities as I see them::<Esc>oSerious alternatives that were not chosen::<Esc>oExplain the range of outcomes::<Esc>oExpected outcome, reasons, and probabilies for each outcome::<Esc>oTime of day, physical and mental feelings::<Esc>7kA
+iabbrev ddlog Situation/Context::<CR>Problem::<CR>Variables that govern the situation include::<CR>Complications/complexities as I see them::<CR>Serious alternatives that were not chosen::<CR>Explain the range of outcomes::<CR>Expected outcome, reasons, and probabilies for each outcome::<CR>Time of day, physical and mental feelings::<Esc>7kA
 
 
 
